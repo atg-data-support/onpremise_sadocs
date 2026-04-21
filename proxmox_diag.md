@@ -3,17 +3,29 @@
 El servidor cuenta con una unidad física particionada para LVM que sustenta todo el sistema.
 
 ## 1. Almacenamiento Físico (Physical Volume)
-**input:** \
-`pvs` 
+**Input:** \
+`pvs`
 
-**output:**
+**Output:**
 ```
   PV         VG  Fmt  Attr PSize   PFree
   /dev/sda3  pve lvm2 a--  237.47g 16.00g
 ```
 Almacenamiento total = 237.47g
 
-## 2. Distribución del almacenamiento (reservas y ocupación)
+## 2. memoria RAM
+**Input:**
+`free -h --si`
+
+**Output:**
+```
+               total        used        free      shared  buff/cache   available
+Mem:             20G        6.7G         12G         52M        2.0G         14G
+Swap:           8.3G        122M        8.1G
+```
+
+
+## 3. Distribución del almacenamiento (reservas y ocupación)
 **input:** \
 `lvs -a --units G`
 
@@ -36,7 +48,7 @@ Almacenamiento total = 237.47g
 ```
 La partición `data` es la reservada para los guests.
 
-## 3. Estado de volúmenes LVM
+## 4. Estado de volúmenes LVM
 **input:** \
 `df -h`
 
@@ -55,7 +67,7 @@ tmpfs                 2.0G     0  2.0G   0% /run/user/0
 
 udev: dispositivos de hardware
 
-## 4. Estado de dispositivos de bloque
+## 5. Estado de dispositivos de bloque
 
 ```
 lsblk
