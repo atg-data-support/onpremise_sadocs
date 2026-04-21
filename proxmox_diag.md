@@ -13,7 +13,7 @@ El servidor cuenta con una unidad física particionada para LVM que sustenta tod
 ```
 Almacenamiento total = 237.47g
 
-## 2. Distribución del almacenamiento (Solo reserva)
+## 2. Distribución del almacenamiento (reservas y ocupación)
 **input:** \
 `lvs -a --units G`
 
@@ -55,7 +55,7 @@ tmpfs                 2.0G     0  2.0G   0% /run/user/0
 
 udev: dispositivos de hardware
 
-## Estado de dispositivos de bloque
+## 4. Estado de dispositivos de bloque
 
 ```
 lsblk
@@ -129,3 +129,78 @@ La unidad de interés se nombró previamente como `ssd-512` (Marcar checbox `Eli
 ![Hardware](/images/st_select.png)
 
 Saldrá una pantalla de avance (`Task viewer`) que se puede cerrar cuando se complete es proceso.
+
+# Estado post pruebas
+Se movió también la máquina de `Snipeit` (id = 153) y se eliminó la 154 de `Zentyal` (con debida autorización de `IT Manager`)
+
+## 1. Distribución de ocupación y reservas
+
+**Input:** \
+`lvs`
+
+**Output:**
+```
+  LV            VG   Attr       LSize   Pool  Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  data          pve  twi-aotz-- 141.45g              38.24  2.36
+  root          pve  -wi-ao---- <69.45g
+  swap          pve  -wi-ao----  <7.69g
+  vm-151-disk-0 pve  Vwi-aotz--  32.00g data         41.89
+  vm-156-disk-0 pve  Vwi-aotz--  32.00g data         48.24
+  vm-157-disk-0 pve  Vwi-a-tz--  32.00g data         24.04
+  vm-158-disk-0 pve  Vwi-aotz--   8.00g data         26.89
+  vm-159-disk-0 pve  Vwi-aotz--   8.00g data         38.22
+  vm-160-disk-0 pve  Vwi-aotz--  16.00g data         46.46
+  vm-161-disk-0 pve  Vwi-aotz--  16.00g data         30.69
+  data2         pve2 twi-aotz-- 476.70g              7.06   12.25
+  vm-153-disk-0 pve2 Vwi-a-tz--  64.00g data2        33.54
+  vm-155-disk-0 pve2 Vwi-a-tz--  32.00g data2        38.08
+```
+
+de un 81% de ocupación pasamos a un 38%
+
+## 2. Estado de dispositivos de bloque
+
+**Input:** \
+`lsblk`
+
+**Output:**
+```
+NAME                         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda                            8:0    0 238.5G  0 disk
+├─sda1                         8:1    0  1007K  0 part
+├─sda2                         8:2    0     1G  0 part /boot/efi
+└─sda3                         8:3    0 237.5G  0 part
+  ├─pve-swap                 252:0    0   7.7G  0 lvm  [SWAP]
+  ├─pve-root                 252:1    0  69.4G  0 lvm  /
+  ├─pve-data_tmeta           252:2    0   1.4G  0 lvm
+  │ └─pve-data-tpool         252:4    0 141.5G  0 lvm
+  │   ├─pve-data             252:5    0 141.5G  1 lvm
+  │   ├─pve-vm--151--disk--0 252:6    0    32G  0 lvm
+  │   ├─pve-vm--156--disk--0 252:10   0    32G  0 lvm
+  │   ├─pve-vm--157--disk--0 252:11   0    32G  0 lvm
+  │   ├─pve-vm--158--disk--0 252:12   0     8G  0 lvm
+  │   ├─pve-vm--159--disk--0 252:13   0     8G  0 lvm
+  │   ├─pve-vm--160--disk--0 252:14   0    16G  0 lvm
+  │   └─pve-vm--161--disk--0 252:15   0    16G  0 lvm
+  └─pve-data_tdata           252:3    0 141.5G  0 lvm
+    └─pve-data-tpool         252:4    0 141.5G  0 lvm
+      ├─pve-data             252:5    0 141.5G  1 lvm
+      ├─pve-vm--151--disk--0 252:6    0    32G  0 lvm
+      ├─pve-vm--156--disk--0 252:10   0    32G  0 lvm
+      ├─pve-vm--157--disk--0 252:11   0    32G  0 lvm
+      ├─pve-vm--158--disk--0 252:12   0     8G  0 lvm
+      ├─pve-vm--159--disk--0 252:13   0     8G  0 lvm
+      ├─pve-vm--160--disk--0 252:14   0    16G  0 lvm
+      └─pve-vm--161--disk--0 252:15   0    16G  0 lvm
+sdb                            8:16   0 476.9G  0 disk
+├─pve2-data2_tmeta           252:16   0   120M  0 lvm
+│ └─pve2-data2-tpool         252:18   0 476.7G  0 lvm
+│   ├─pve2-vm--153--disk--0  252:7    0    64G  0 lvm
+│   ├─pve2-data2             252:19   0 476.7G  1 lvm
+│   └─pve2-vm--155--disk--0  252:20   0    32G  0 lvm
+└─pve2-data2_tdata           252:17   0 476.7G  0 lvm
+  └─pve2-data2-tpool         252:18   0 476.7G  0 lvm
+    ├─pve2-vm--153--disk--0  252:7    0    64G  0 lvm
+    ├─pve2-data2             252:19   0 476.7G  1 lvm
+    └─pve2-vm--155--disk--0  252:20   0    32G  0 lvm
+```
