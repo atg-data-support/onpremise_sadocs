@@ -74,3 +74,8 @@ al no salir nada con la ejecución rápida de un contenedor hemos de entender qu
     - levantar servicio `docker up -d`
 
 de lunes a viernes el nivel de usuarios es crítico y acorde a la jornada del personal de sistemas hay poco espacio de maniobra para poder ejecutar el plan sin comprometer la operación, por lo que se requiere definir un espacio de tiempo adecuado.
+
+- Se ejecutó plan experimental en un entorno de prueba https://atgvw.lan, el protocolo websocket funciona de manera unificad en el puerto 80, por eso los logs del repositorio no entregaban mensajes relacionados con el puerto 3012.
+- En el entorno de producción https://vaultwarden.lan se verificó en consola y de hecho websocket si estaba funcional.
+![websocket](images/websocket.png)
+En conclusión los inconvientes de sincronización no obedecen al protocolo websocket. 

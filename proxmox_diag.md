@@ -138,7 +138,7 @@ Ir a la sección de `Hardware` &#8594; `Disco Duro` &#8594; `Disk Action` &#8594
 
 ### 5.3 selección de Unidad de Almacenamiento
 La unidad de interés se nombró previamente como `ssd-512` (Marcar checbox `Eliminar origen`)
-![Hardware](/images/st_select.png)
+![st_select](/images/st_select.png)
 
 Saldrá una pantalla de avance (`Task viewer`) que se puede cerrar cuando se complete es proceso.
 
