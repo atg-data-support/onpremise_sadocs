@@ -79,3 +79,7 @@ de lunes a viernes el nivel de usuarios es crítico y acorde a la jornada del pe
 - En el entorno de producción https://vaultwarden.lan se verificó en consola y de hecho websocket si estaba funcional.
 ![websocket](images/websocket.png)
 En conclusión los inconvientes de sincronización no obedecen al protocolo websocket. 
+
+## Mes: Mayo
+### Día 04
+Actualización de aplicación vaultwarden de versión 1.35.2 a 1.36.0
